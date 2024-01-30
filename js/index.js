@@ -1,5 +1,54 @@
 criarBtn.onclick = () => {
-    console.log(clicou)
-    overlay.classList.add('show')
-    formCriar.classList.add('show')
+    console.log ('clicou');
+    overlay.classList.add('show');
+    formCriar.classList.add('show');
 }
+
+closeForm.onclick = () => {
+    overlay.classList.remove('show');
+    formCriar.classList.remove('show');
+}
+
+overlay.onclick = () => {
+    overlay.classList.remove('show');
+    formCriar.classList.remove('show');
+}
+
+formCriar.onsubmit = () => {
+    event.preventDefault();
+
+    // alert(nome.value+' '+capacidade.value);
+
+    listTeams.innerHTML = ' ';
+    listTeams.innerHTML = `
+                    <li>
+                        <h4>Nome do Team<box-icon name='show'></box-icon></h4>
+                        <h1>0 <span>/ 0</span></h1>
+                        <div class="actions">
+                            <button>adicionar</button>
+                            <button><box-icon name='trash'></box-icon></button>
+                        </div>
+                    </li>
+                    `;
+
+
+    overlay.classList.remove('show');
+    formCriar.classList.remove('show');
+}
+
+
+
+// function toggleShow(addORrem) {
+//     const action = addORrem ? 'add' : 'remove';
+//     overlay.classList[action]('show');
+//     formCriar.classList[action]('show');
+// }
+
+// criarBtn.onclick = () => {
+//     // console.log('clicou');
+//     toggleShow(true);
+// }
+
+// const closeActions = () => toggleShow(false);
+// closeForm.onclick = closeActions;
+// overlay.onclick = closeActions;
