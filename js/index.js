@@ -1,5 +1,4 @@
 criarBtn.onclick = () => {
-    console.log ('clicou');
     overlay.classList.add('show');
     formCriar.classList.add('show');
 }
@@ -17,13 +16,11 @@ overlay.onclick = () => {
 formCriar.onsubmit = () => {
     event.preventDefault();
 
-    // alert(nome.value+' '+capacidade.value);
-
     listTeams.innerHTML = ' ';
     listTeams.innerHTML = `
                     <li>
-                        <h4>Nome do Team<box-icon name='show'></box-icon></h4>
-                        <h1>0 <span>/ 0</span></h1>
+                        <h4>${nome.value}<box-icon name='show' id='ShowHide'></box-icon></h4>
+                        <h1>0 <span>/ ${capacidade.value}</span></h1>
                         <div class="actions">
                             <button>adicionar</button>
                             <button><box-icon name='trash'></box-icon></button>
@@ -31,6 +28,7 @@ formCriar.onsubmit = () => {
                     </li>
                     `;
 
+    // ShowHide.
 
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
