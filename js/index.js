@@ -34,11 +34,19 @@ overlay.onclick = closeActions;
 formCriar.onsubmit = () => {
     event.preventDefault();
 
+    function changeBoxIcon(icon){
+        if (icon.getAttribute('name') === 'show'){
+            icon.setAttribute('name', 'hide');
+        } else {
+            icon.setAttribute('name', 'show');
+        };
+    };
+
     listTeams.innerHTML = ' ';
     listTeams.innerHTML = `
                     <li>
-                        <h4>`+nome.value+`<box-icon name='show' id='ShowHide'></box-icon></h4>
-                        <h1>0 <span>/ 0</span></h1>
+                        <h4>${nome.value}<box-icon name='show' id='ShowHide'></box-icon></h4>
+                        <h1>0 <span>/ ${capacidade.value}</span></h1>
                         <div class="actions">
                             <button>adicionar</button>
                             <button><box-icon name='trash'></box-icon></button>
@@ -46,21 +54,12 @@ formCriar.onsubmit = () => {
                     </li>
                     `;
 
+    const icon = document.getElementById('ShowHide');
+    icon.addEventListener('click', function() {
+        changeBoxIcon(this);
+    });
+
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
-}
+};
 
-
-
-    document.getElementById('ShowHide')
-    ShowHide.addEventListener('click', function() {
-    var SH = document.getElementById('ShowHide');
-    var EYE = SH.getAttribute('name');
-
-    if (EYE === 'show'){
-        SH.setAttribute('name', 'hide');
-    }
-    else {
-        SH.setAttribute('name', 'show');
-    }
-});
