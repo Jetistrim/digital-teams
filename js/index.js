@@ -38,6 +38,8 @@ formCriar.onsubmit = () => {
         members: []
     })
 
+    adicionarCards()
+
     function changeBoxIcon(icon){
         if (icon.getAttribute('name') === 'show'){
             icon.setAttribute('name', 'hide');
@@ -46,17 +48,7 @@ formCriar.onsubmit = () => {
         };
     };
 
-    // listTeams.innerHTML = ' ';
-    // listTeams.innerHTML = `
-    //                 <li>
-    //                     <h4>${nome.value}<box-icon name='show' id='ShowHide'></box-icon></h4>
-    //                     <h1>0 <span>/ ${capacidade.value}</span></h1>
-    //                     <div class="actions">
-    //                         <button>adicionar</button>
-    //                         <button><box-icon name='trash'></box-icon></button>
-    //                     </div>
-    //                 </li>
-    //                 `;
+    ShowHide.onclick[changeBoxIcon()]
 
     const icon = document.getElementById('ShowHide');
     icon.addEventListener('click', function() {
@@ -66,3 +58,20 @@ formCriar.onsubmit = () => {
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
 };
+
+
+function adicionarCards(){
+    listTeams.innerHTML = ' ';
+    for (let i = 0; i < teams.length; i++){
+        listTeams.innerHTML += `
+                        <li>
+                            <h4> ${teams[i].name} <box-icon name='show' id='ShowHide'></box-icon></h4>
+                            <h1>0 <span>/ ${teams[i].capacity}</span></h1>
+                            <div class="actions">
+                                <button>adicionar</button>
+                                <button><box-icon name='trash'></box-icon></button>
+                            </div>
+                        </li>
+                        `;
+    }
+}
