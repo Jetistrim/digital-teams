@@ -14,26 +14,42 @@
 //     formCriar.classList.remove('show');
 // }
 
-let teams = []
+let meusTeams = []
 let teamsArr = []
 
-function toggleShow(addORrem) {
+function mostrarEsconderFormCriar(addORrem) {
     const action = addORrem ? 'add' : 'remove';
     overlay.classList[action]('show');
     formCriar.classList[action]('show');
 }
 
-criarBtn.onclick = () => {
-    toggleShow(true);
+function mostrarEsconderFormParticipantes(addORremParticipante){
+    const actionParticipante = addORremParticipante ? 'add' : 'remove';
+    formParticipante.classList[actionParticipante]('show');
+    closeFormParticipante.classList[actionParticipante]('show')
 }
 
-const closeActions = () => toggleShow(false);
+
+
+criarBtn.onclick = () => {
+    mostrarEsconderFormCriar(true);
+}
+
+const closeActionsParticipantes = () => {
+    closeFormParticipante.onclick = closeActionsParticipantes;
+    overlay.onclick = closeActionsParticipantes;
+}
+
+const closeActions = () => mostrarEsconderFormCriar(false);
 closeForm.onclick = closeActions;
 overlay.onclick = closeActions;
 
+
+//------------------------------------------------------------------------------
+
 formCriar.onsubmit = () => { // Ao enviar, ocorre isso
     event.preventDefault();
-    teams.push({ // insere na array 'teams' as informações
+    meusTeams.push({ // insere na array 'meusTeams' as informações
         name: nome.value,
         capacity: capacidade.value,
         members: []
@@ -49,31 +65,33 @@ formCriar.onsubmit = () => { // Ao enviar, ocorre isso
 function adicionarCards(){
     let teamsAdded = {}
     listTeams.innerHTML = ' ';
-    for (let i = 0; i < teams.length; i++){
-        if (!teamsAdded[teams[i].name]){
+    for (let i = 0; i < meusTeams.length; i++){
+        if (!teamsAdded[meusTeams[i].name]){
             let cardHTML = `
-            <li>
-                <h4> ${teams[i].name} <box-icon name='show' id='ShowHide${i}' onclick="changeBoxIcon(${i})"></box-icon></h4>
-                <h1>0 <span>/ ${teams[i].capacity}</span></h1>
+            <li id='card${i}'>
+                <h4> ${meusTeams[i].name} <box-icon name='show' id='ShowHide${i}' onclick="changeBoxIcon(${i})"></box-icon></h4>
+                <h1>0 <span>/ ${meusTeams[i].capacity}</span></h1>
                 <div class="actions">
-                    <button>adicionar</button>
-                    <button><box-icon name='trash' id='removerCard' onclick='adios(${i})'></box-icon></button>
+                    <button onclick="mostrarFormParticipante(${i})">adicionar</button>
+                    <button onclick='adios(${i})'><box-icon name='trash'></box-icon></button>
                 </div>
             </li>
             `;
             teamsArr.push(cardHTML);
-            teamsAdded[teams[i].name] = true
-            listTeams.innerHTML += cardHTML
+            teamsAdded[meusTeams[i].name] = true
+            listTeams.innerHTML += cardHTML;
             console.log(teamsAdded);
         }
         // CRIAR TELA "NOME DE TEAM JÁ UTILIZADO"
-        // FAZER O DELETE DA li
         // FAZER O "hide" DAS INFORMAÇÕES
     }
 }
 
-function adios(p) {
-    listTeams.removeChild()
+function adios(indice) {
+    let ULfilho = document.getElementById(`card${indice}`);
+    ULfilho.parentNode.removeChild(ULfilho);
+    meusTeams.splice(indice, 1);
+    teamsArr.splice(indice, 1);
 }
 
 function changeBoxIcon(b){ //função para mudar o icone do olho
@@ -84,3 +102,20 @@ function changeBoxIcon(b){ //função para mudar o icone do olho
         icon.setAttribute('name', 'show');
     };
 };
+
+
+function mostrarFormParticipante(indice){
+    overlay.classList.add("show")
+    formParticipante.classList.add("show")
+    teamID.value = indice
+}
+
+formParticipante.onsubmit = () => {
+    event.preventDefault();
+    teams[Number(teamID.value)].members.push(nomeParticipante.value);
+    alert("Participante inserido com sucesso!");
+    formParticipante.reset();
+}
+
+// listar participantes
+// contabilizador e capacidade máxima atingida
