@@ -57,7 +57,7 @@ function adicionarCards(){
                 <h1>0 <span>/ ${teams[i].capacity}</span></h1>
                 <div class="actions">
                     <button>adicionar</button>
-                    <button><box-icon name='trash'></box-icon></button>
+                    <button><box-icon name='trash' id='removerCard' onclick='adios(${i})'></box-icon></button>
                 </div>
             </li>
             `;
@@ -70,6 +70,10 @@ function adicionarCards(){
         // FAZER O DELETE DA li
         // FAZER O "hide" DAS INFORMAÇÕES
     }
+}
+
+function adios(p) {
+    listTeams.removeChild()
 }
 
 function changeBoxIcon(b){ //função para mudar o icone do olho
