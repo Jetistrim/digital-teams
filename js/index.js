@@ -19,8 +19,8 @@ let teamsArr = []
 
 function mostrarEsconderFormCriar(addORrem) {
     const action = addORrem ? 'add' : 'remove';
-    overlay.classList[action]('show');
     formCriar.classList[action]('show');
+    overlay.classList[action]('show');
 }
 
 function mostrarEsconderFormParticipantes(addORremParticipante){
@@ -28,8 +28,6 @@ function mostrarEsconderFormParticipantes(addORremParticipante){
     formParticipante.classList[actionParticipante]('show');
     closeFormParticipante.classList[actionParticipante]('show')
 }
-
-
 
 criarBtn.onclick = () => {
     mostrarEsconderFormCriar(true);
@@ -43,6 +41,11 @@ const closeActionsParticipantes = () => {
 const closeActions = () => mostrarEsconderFormCriar(false);
 closeForm.onclick = closeActions;
 overlay.onclick = closeActions;
+
+function voltaAoForm(){
+    formTeamRepetido.classList.remove('show')
+    formCriar.classList.add('show');
+}
 
 
 //------------------------------------------------------------------------------
@@ -60,7 +63,6 @@ formCriar.onsubmit = () => { // Ao enviar, ocorre isso
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
 };
-
 
 function adicionarCards(){
     let teamsAdded = {}
@@ -81,6 +83,9 @@ function adicionarCards(){
             teamsAdded[meusTeams[i].name] = true
             listTeams.innerHTML += cardHTML;
             console.log(teamsAdded);
+        } else {
+            formCriar.classList.remove('show');
+            formTeamRepetido.classList.add('show');
         }
         // CRIAR TELA "NOME DE TEAM JÁ UTILIZADO"
         // FAZER O "hide" DAS INFORMAÇÕES
