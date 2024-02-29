@@ -18,8 +18,8 @@ overlay.onclick = () => {
 }
 
 closeFormParticipante.onclick = () => {
+    formParticipante.classList.remove('show')
     overlay.classList.remove('show');
-    formParticipante.classList.remove('show');
 }
 
 function voltaAoForm(){
@@ -30,15 +30,16 @@ function voltaAoForm(){
 
 //------------------------------------------------------------------------------
 
-formCriar.onsubmit = () => {
+formCriar.onsubmit = () => { // Ao enviar, ocorre isso
     event.preventDefault();
-    meusTeams.push({
+    meusTeams.push({ // insere na array 'meusTeams' as informações
         name: nome.value,
         capacity: capacidade.value,
         members: []
     })
     localStorage.setItem("lista", JSON.stringify(meusTeams))
-    adicionarCards()
+    
+    adicionarCards() // aciona a function
 
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
@@ -47,6 +48,7 @@ formCriar.onsubmit = () => {
 function adicionarCards(){
     let teamsAdded = {}
     listTeams.innerHTML = ' ';
+
     for (let i = 0; i < meusTeams.length; i++){
         if (!teamsAdded[meusTeams[i].name]){
             let cardHTML = `
@@ -63,6 +65,7 @@ function adicionarCards(){
             teamsAdded[meusTeams[i].name] = true
             listTeams.innerHTML += cardHTML;
             console.log(teamsAdded);
+
         } else {
             formCriar.classList.remove('show');
             formTeamRepetido.classList.add('show');
@@ -80,7 +83,7 @@ function adios(indice) {
     localStorage.setItem("lista", JSON.stringify(meusTeams))
 }
 
-function changeBoxIcon(indice){
+function changeBoxIcon(indice){ //função para mudar o icone do olho
     let icon = document.getElementById('ShowHide'+indice)
     if (icon.getAttribute('name') === 'show'){ 
         icon.setAttribute('name', 'hide');
@@ -89,7 +92,6 @@ function changeBoxIcon(indice){
     };
     alert(meusTeams[indice].members)
 };
-
 
 function mostrarFormParticipante(indice){
     overlay.classList.add("show")
@@ -107,6 +109,23 @@ formParticipante.onsubmit = () => {
         alert("Participante inserido com sucesso!");
         formParticipante.reset();
         adicionarCards();
+    }
+}
+
+function searchTeam(){
+    let lista = document.querySelectorAll('#teams ul li');
+    console.log(lista);
+    if (pesquisa.value.length >= 3){
+        for (let i = 0; i < lista.length; i++){
+            if(lista[i].children[0].innerText.toString().toLowerCase().includes(pesquisa.value.toLowerCase())){
+                lista[i].classList.remove("none");
+            } else {
+                lista[i].classList.add("none");
+            }
+        }
+    } else {
+        for (let i=0; i < lista.length; i++)
+            lista[i].classList.remove('none');
     }
 }
 

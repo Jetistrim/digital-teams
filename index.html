@@ -13,7 +13,7 @@
             <img src="imgs/logo.png" alt="Logo Digital Teams">
         </div>
         <div class="busca">
-            <input type="text" placeholder="Qual grupo está procurando?"/>
+            <input type="text" placeholder="Qual grupo está procurando?" id="pesquisa" onkeyup="searchTeam()"/>
             <box-icon name='search'></box-icon>
         </div>
     </header>
@@ -22,6 +22,7 @@
         <section class="container" id="teams">
             <h2>Teams <button id="criarBtn"><box-icon name='plus'></box-icon>Novo Team</button></h2>
             <ul id="listTeams">
+                <li class="noTeams">Nenhum team adicionado ainda.</li>
             </ul>
         </section>
     </main>
@@ -37,7 +38,7 @@
         <button type="submit">Criar</button>
     </form>
 
-    <form id="formTeamRepetido">
+    <form id="formTeamRepetido" class="">
         <h3>Ops! <box-icon name=x id="closeFormTeamRepetido" onclick="voltaAoForm()"></box-icon></h3>
         <h2>Parece que esse nome já foi utilizado</h2>
         <h2> </h2>
