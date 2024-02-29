@@ -1,3 +1,6 @@
+let meusTeams = JSON.parse(localStorage.getItem("lista")) || [];
+let teamsArr = []
+
 criarBtn.onclick = () => {
     overlay.classList.add('show');
     formCriar.classList.add('show');
@@ -8,24 +11,15 @@ closeForm.onclick = () => {
     formCriar.classList.remove('show');
 }
 
-overlay.onclick = (abasControle) => {
+overlay.onclick = () => {
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
     formParticipante.classList.remove('show')
 }
 
-let meusTeams = JSON.parse(localStorage.getItem("lista")) || [];
-let teamsArr = []
-
-function mostrarEsconderFormParticipantes(addORremParticipante){
-    const actionParticipante = addORremParticipante ? 'add' : 'remove';
-    formParticipante.classList[actionParticipante]('show');
-    closeFormParticipante.classList[actionParticipante]('show')
-}
-
-const closeActionsParticipantes = () => {
-    closeFormParticipante.onclick = closeActionsParticipantes;
-    overlay.onclick = closeActionsParticipantes;
+closeFormParticipante.onclick = () => {
+    overlay.classList.remove('show');
+    formParticipante.classList.remove('show');
 }
 
 function voltaAoForm(){
@@ -36,15 +30,15 @@ function voltaAoForm(){
 
 //------------------------------------------------------------------------------
 
-formCriar.onsubmit = () => { // Ao enviar, ocorre isso
+formCriar.onsubmit = () => {
     event.preventDefault();
-    meusTeams.push({ // insere na array 'meusTeams' as informações
+    meusTeams.push({
         name: nome.value,
         capacity: capacidade.value,
         members: []
     })
     localStorage.setItem("lista", JSON.stringify(meusTeams))
-    adicionarCards() // aciona a function
+    adicionarCards()
 
     overlay.classList.remove('show');
     formCriar.classList.remove('show');
@@ -74,7 +68,6 @@ function adicionarCards(){
             formTeamRepetido.classList.add('show');
         }
         // CRIAR TELA "NOME DE TEAM JÁ UTILIZADO"
-        // FAZER O "hide" DAS INFORMAÇÕES
     }
 }
 
@@ -87,7 +80,7 @@ function adios(indice) {
     localStorage.setItem("lista", JSON.stringify(meusTeams))
 }
 
-function changeBoxIcon(indice){ //função para mudar o icone do olho
+function changeBoxIcon(indice){
     let icon = document.getElementById('ShowHide'+indice)
     if (icon.getAttribute('name') === 'show'){ 
         icon.setAttribute('name', 'hide');
