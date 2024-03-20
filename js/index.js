@@ -46,31 +46,32 @@ formCriar.onsubmit = () => { // Ao enviar, ocorre isso
 };
 
 function adicionarCards(){
-    let teamsAdded = {}
-    listTeams.innerHTML = ' ';
+    let teamsAdded = {};
+    listTeams.innerHTML = ' '; // Limpa a lista antes de adicionar novos cards
 
-    for (let i = 0; i < meusTeams.length; i++){
-        if (!teamsAdded[meusTeams[i].name]){
-            let cardHTML = `
-            <li id='card${i}'>
-                <h4> ${meusTeams[i].name} <box-icon name='show' id='ShowHide${i}' onclick="changeBoxIcon(${i})"></box-icon></h4>
-                <h1>${meusTeams[i].members.length} <span>/ ${meusTeams[i].capacity}</span></h1>
-                <div class="actions">
-                    <button onclick="mostrarFormParticipante(${i})">adicionar</button>
-                    <button onclick='adios(${i})'><box-icon name='trash'></box-icon></button>
-                </div>
-            </li>
-            `;
-            teamsArr.push(cardHTML);
-            teamsAdded[meusTeams[i].name] = true
-            listTeams.innerHTML += cardHTML;
-            console.log(teamsAdded);
-
-        } else {
-            formCriar.classList.remove('show');
-            formTeamRepetido.classList.add('show');
+    if (meusTeams.length > 0) {
+        for (let i = 0; i < meusTeams.length; i++){
+            if (!teamsAdded[meusTeams[i].name]){
+                let cardHTML = `
+                <li id='card${i}'>
+                    <h4> ${meusTeams[i].name} <box-icon name='show' id='ShowHide${i}' onclick="changeBoxIcon(${i})"></box-icon></h4>
+                    <h1>${meusTeams[i].members.length} <span>/ ${meusTeams[i].capacity}</span></h1>
+                    <div class="actions">
+                        <button onclick="mostrarFormParticipante(${i})">adicionar</button>
+                        <button onclick='adios(${i})'><box-icon name='trash'></box-icon></button>
+                    </div>
+                </li>
+                `;
+                teamsArr.push(cardHTML);
+                teamsAdded[meusTeams[i].name] = true;
+                listTeams.innerHTML += cardHTML; // Adiciona cada card de team ao HTML
+            } else {
+                formCriar.classList.remove('show');
+                formTeamRepetido.classList.add('show');
+            }
         }
-        // CRIAR TELA "NOME DE TEAM JÁ UTILIZADO"
+    } else {
+        listTeams.innerHTML = '<li class="noTeams">Nenhum team adicionado ainda.</li>';
     }
 }
 
@@ -81,6 +82,9 @@ function adios(indice) {
     ULfilho.parentNode.removeChild(ULfilho);
     meusTeams.splice(indice, 1);
     localStorage.setItem("lista", JSON.stringify(meusTeams))
+    if (meusTeams.length == 0){
+        listTeams.innerHTML = '<li class="noTeams">Nenhum team adicionado ainda.</li>';
+    }
 }
 
 function changeBoxIcon(indice){ //função para mudar o icone do olho
@@ -129,5 +133,3 @@ function searchTeam(){
     }
 }
 
-// tornar a pesquisa de teams funcional
-// buscar string methods para pesquisar teams
